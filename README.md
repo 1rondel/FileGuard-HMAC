@@ -1,46 +1,48 @@
 # FileGuard HMAC
 
-Proyecto educativo en Python para aprender a detectar cambios en un archivo mediante un HMAC. El programa calcula un HMAC-SHA-256 para `documento.txt`, guarda una referencia en JSON y permite compararla más adelante.
+Proyecto educativo en Python para aprender a detectar cambios en un archivo usando HMAC-SHA-256. El programa está en desarrollo y permite practicar la generación de una clave local, el cálculo del HMAC y la comparación con una referencia JSON.
 
-## Qué demuestra
+## Objetivos de aprendizaje
 
-- Generar una clave de 32 bytes con `secrets`.
+- Crear una clave aleatoria con `secrets`.
 - Calcular un HMAC con `hmac` y `hashlib`.
-- Guardar y cargar metadatos de referencia con `json`.
-- Comparar los HMAC con `hmac.compare_digest()`.
+- Guardar y leer datos de referencia con `json`.
+- Comparar valores HMAC con `hmac.compare_digest()`.
+- Practicar validación de archivos, manejo de errores y organización de funciones.
 
 ## Archivos
 
-- `fileguard.py`: menú, inicialización y verificación.
-- `documento.txt`: archivo de muestra que se protege.
-- `Documentacion-Joplin-FileGuard-HMAC.md`: nota de aprendizaje para Joplin; se conserva aparte del repositorio.
+- `fileguard.py`: menú y funciones de creación y verificación.
+- `documento.txt`: ejemplo local para practicar la verificación.
+- `.gitignore`: excluye la clave y la referencia generadas localmente.
 
-La clave local (`clave.key`) y la referencia generada (`referencia.json`) se crean o usan en tu equipo y se excluyen del repositorio.
+`clave.key`, `referencia.json` y la documentación de aprendizaje para Joplin se mantienen fuera de los archivos versionados. No deben subirse al repositorio.
 
-## Requisitos y uso
+## Requisitos
 
-Se necesita Python 3. El proyecto usa módulos incluidos en Python, por lo que no requiere paquetes externos.
+Python 3. El código utiliza módulos de la biblioteca estándar; no requiere instalar paquetes con `pip`.
 
-Desde la carpeta `FileGuard-HMAC`:
+## Iniciar el programa
+
+Desde la carpeta del proyecto, ejecuta:
 
 ```text
 python fileguard.py
 ```
 
-1. Elige **1** y confirma para inicializar la referencia del contenido actual.
-2. Elige **2** para verificar el documento.
-3. Para practicar, cambia una letra de `documento.txt` y vuelve a verificar; el HMAC debería dejar de coincidir.
+El menú ofrece inicializar la referencia, verificar el documento o salir. La creación/verificación todavía está en desarrollo; revisa los pendientes antes de confiar en sus resultados.
 
-La opción de verificación no actualiza la referencia. Para aceptar un cambio legítimo, inicialízala de nuevo conscientemente.
+## Estado actual y pendientes
 
-## Bibliotecas
+Este es un proyecto de aprendizaje, no una herramienta lista para proteger archivos importantes. Queda por completar y comprobar, entre otros, estos puntos:
 
-`hmac`, `hashlib`, `secrets`, `json` y `pathlib` forman parte de la biblioteca estándar de Python.
+- Asegurar que las funciones de creación usen una sola vez el resultado de cada llamada y detengan el flujo cuando la persona cancela.
+- Completar el caso en que falta la clave para que la creación de la referencia reciba la clave correcta.
+- Separar claramente inicialización y verificación para que verificar no inicialice datos accidentalmente.
+- Manejar una referencia JSON inválida o con campos y tipos inesperados.
+- Definir cómo se confirma una actualización de una referencia existente.
+- Probar rutas cuando el programa se inicia desde otra carpeta y configurar permisos locales adecuados para la clave en Windows.
 
-## Estado y siguientes pasos
+## Seguridad y limitaciones
 
-La lectura estática del código muestra que el flujo principal está conectado. Aún conviene comprobarlo ejecutando los casos de inicialización, verificación sin cambios y verificación después de modificar el documento. También faltan mensajes claros para JSON dañado o una clave vacía y configurar permisos restrictivos para `clave.key` en Windows.
-
-## Limitaciones
-
-Este es un ejercicio de aprendizaje, no una herramienta lista para producción. La clave y la referencia deben permanecer protegidas. Si alguien puede leer la clave y reemplazar la referencia, puede crear un HMAC que coincida con un documento modificado. El código actual tampoco restringe por sí mismo los permisos de la clave en Windows.
+La clave y la referencia deben mantenerse protegidas. Si una persona puede leer la clave y reemplazar la referencia, puede generar un HMAC válido para un documento modificado. `.gitignore` evita añadir esos archivos localmente a Git, pero no protege su contenido en el equipo. No uses este ejercicio para datos importantes o sensibles.
