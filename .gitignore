@@ -10,3 +10,5 @@ Documentacion-Joplin-FileGuard-HMAC.md
 # Archivos generados por Python.
 __pycache__/
 *.py[cod]
+
+test_fileguard.py
