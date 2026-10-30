@@ -12,3 +12,5 @@ __pycache__/
 *.py[cod]
 
 test_fileguard.py
+
+test_ini_ver.py
